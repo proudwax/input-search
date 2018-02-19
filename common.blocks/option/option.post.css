@@ -1,0 +1,12 @@
+:block(option) {
+    max-height: 300px;
+    overflow-y: auto;
+
+    &:elem(item) {
+        float: left;
+        clear: both;
+
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

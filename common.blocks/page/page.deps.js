@@ -2,6 +2,7 @@
     mustDeps: [
     ],
     shouldDeps: [
-        'content'
+        'content',
+        'input-search'
     ]
 })

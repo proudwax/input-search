@@ -2,7 +2,13 @@ block('page').content()(function() {
     return [
         {
             block: 'content',
-            content: 're'
+            mods: { type: 'center' },
+            content: [
+                {
+                    block: 'input-search',
+                    data: '/kladr.json'
+                }
+            ]
         }
     ];
 });
