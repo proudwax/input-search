@@ -1,12 +1,18 @@
-block('page').content()(function() {
+block('page').content()(function () {
     return [
         {
-            block: 'content',
-            mods: { type: 'center' },
+            block: 'test',
             content: [
                 {
-                    block: 'input-search',
-                    data: '/kladr.json'
+                    elem: 'elem',
+                    mix: { block: 'content' },
+                    content: [
+                        {
+                            block: 'input-search',
+                            mods: { size: 'm', theme: 'islands' },
+                            data: '/kladr.json'
+                        }
+                    ]
                 }
             ]
         }

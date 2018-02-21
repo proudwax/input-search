@@ -1,0 +1,8 @@
+:block(input-search) {
+    display: inline-block;
+    font-size: 0;
+
+    &:elem(spin) {
+        margin: 30px;
+    }
+}

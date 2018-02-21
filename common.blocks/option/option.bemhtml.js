@@ -1,5 +1,10 @@
 block('option')(
-    elem('item')(
-        tag()('span')
-    )
+    js()(true),
+
+    // content()(function (node, ctx) {
+    //     return {
+    //         elem: 'list',
+    //         content: applyNext()
+    //     };
+    // })
 );

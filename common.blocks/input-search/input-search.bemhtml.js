@@ -13,21 +13,39 @@ block('input-search')(
         return [
             {
                 block: 'input',
+                mix: { block: this.block, elem: 'input' },
                 mods: {
-                    theme: 'islands',
-                    size: 'm'
+                    theme: ctx.mods.theme || false,
+                    size: ctx.mods.size || false,
+                    'has-clear': true
                 },
                 placeholder: 'Введите имя'
             },
             {
                 block: 'popup',
+                mix: { block: this.block, elem: 'popup' },
                 mainOffset: 1,
                 directions: ['bottom-left'],
-                mods: { theme: 'islands', target: 'anchor', autoclosable: true },
+                mods: {
+                    theme: ctx.mods.theme || false,
+                    target: 'anchor',
+                    autoclosable: true
+                },
                 content: [
                     {
-                        block: 'spin',
-                        mods: {  theme: 'islands',  size: 'm',  visible: true  }
+                        block: 'option',
+                        mods: { size: 'm' },
+                        content: [
+                            {
+                                block: 'spin',
+                                mix: { block: 'option', elem: 'spin' },
+                                mods: {
+                                    theme: ctx.mods.theme || false,
+                                    size: ctx.mods.size || false,
+                                    visible: true
+                                }
+                            }
+                        ]
                     }
                 ]
             }

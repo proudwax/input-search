@@ -1,0 +1,13 @@
+:block(option):elem(item) {
+    display: block;
+
+    padding-left: 10px;
+    padding-right: 10px;
+
+    transition: all .3s ease-out;
+
+    &:hover {
+        cursor: pointer;
+        background-color:#ffeba0;
+    }  
+}
