@@ -6,4 +6,8 @@
         font-size: 13px;
         line-height: 28px;
     }
+
+    &:focus {
+        border: 1px solid red;
+    }
 }

@@ -19,6 +19,7 @@ block('input-search')(
                     size: ctx.mods.size || false,
                     'has-clear': true
                 },
+                name: ctx.name || null,
                 placeholder: 'Введите имя'
             },
             {

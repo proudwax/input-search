@@ -6,7 +6,7 @@
 
     transition: all .3s ease-out;
 
-    &:hover {
+    &:mod(hovered) {
         cursor: pointer;
         background-color:#ffeba0;
     }  

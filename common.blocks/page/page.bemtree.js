@@ -10,7 +10,8 @@ block('page').content()(function () {
                         {
                             block: 'input-search',
                             mods: { size: 'm', theme: 'islands' },
-                            data: '/kladr.json'
+                            data: '/kladr.json',
+                            name: 'city'
                         }
                     ]
                 }

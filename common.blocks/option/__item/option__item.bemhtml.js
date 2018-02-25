@@ -1,3 +1,9 @@
 block('option').elem('item')(
-    tag()('span')
+    tag()('span'),
+
+    addAttrs()(function (node, ctx) {
+        return {
+            role: 'option'
+        };
+    })
 );
