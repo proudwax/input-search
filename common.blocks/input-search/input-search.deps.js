@@ -3,7 +3,7 @@
     shouldDeps: [
         {
             block: 'input',
-            mods: { theme: 'islands', size: 'm', 'has-clear': true }
+            mods: { theme: 'islands', size: 'm' }
         },
         {
             block: 'popup',
@@ -11,7 +11,7 @@
         },
         {
             block: 'spin',
-            mods: { theme: 'islands', size: 'm', visible: true }
+            mods: { theme: 'islands', size: 's', visible: true }
         },
         'option'
     ]

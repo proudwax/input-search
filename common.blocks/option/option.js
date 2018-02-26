@@ -33,12 +33,22 @@ modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes'
             return coordsNode.top > 0 && coordsNode.top < coordsOption.top + coordsOption.height;
         },
 
-        onScroll: function () {
+        _onScroll: function (data) {
+            var items = this.findChildElems('item').toArray(),
+                lastItem = items[items.length - 1],
+                spin = this.findChildElem({ elem: 'item', modName: 'spin', modVal: true });
+
             this._domEvents().on('scroll', throttle(
                 function (e) {
-                    console.dir(this.domElem[0]);
-                    console.log(this.domElem[0].scrollTop);
-                }, 300).bind(this));
+                    if (this._isVisible(lastItem.domElem)) {
+                        this
+                            ._replaceContent(this._getBemJson(data.splice(0, 50)), spin.domElem)
+                            ._addSpin()
+                            ._domEvents().un('scroll');
+                        
+                        this._addPartOfData(data);
+                    }
+                }, 100).bind(this));
         },
 
         updateContent: function (bemJson) {
@@ -47,18 +57,18 @@ modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes'
             return this;
         },
 
-        addContent: function (bemJson) {
-            bemDom.append(this.domElem, BEMHTML.apply({ block: 'option', tag: '', content: bemJson }));
-        },
-
-        addSpin: function () {
-            this.addContent({ block: 'spin', mods: { theme: 'islands', size: 'm', visible: true } });
+        _replaceContent: function (bemJson, ctx) {
+            bemDom.replace(ctx || this.domElem, BEMHTML.apply({ block: 'option', tag: '', content: bemJson }));
 
             return this;
         },
 
-        removeSpin: function () {
-            this.findChildBlock(Spin) && bemDom.destruct(this.findChildBlock(Spin).domElem);
+        addContent: function (bemJson) {
+            bemDom.append(this.domElem, BEMHTML.apply({ block: 'option', tag: '', content: bemJson }));
+        },
+
+        _addSpin: function () {
+            this.addContent({ elem: 'item', elemMods: { spin: true }, content: [{ block: 'spin', mods: { theme: 'islands', size: 's', visible: true } }, 'Загрузка'] });
 
             return this;
         },
@@ -69,8 +79,27 @@ modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes'
             return this;
         },
 
+        _addPartOfData: function (data) {
+            if (data.length > 50) {
+                this._onScroll(data);
+            } else {
+                var spin = this.findChildElem({ elem: 'item', modName: 'spin', modVal: true });
+                    bemJson = this._getBemJson(data.splice(0, 50));
+
+                this._replaceContent(bemJson, spin.domElem)
+            }
+        },
+        
         setData: function (data) {
-            console.log(data);
+            if (data.length > 50) {
+                this._originData = data.slice();
+                this
+                    .updateContent(this._getBemJson(this._originData.splice(0,50)))
+                    ._addSpin()
+                    ._addPartOfData(this._originData);
+            } else {
+                this.updateContent(this._getBemJson(data));
+            }
         },
 
         _getBemJson: function (data) {
@@ -141,6 +170,12 @@ modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes'
             } else if (this._hoveredItem === item) {
                 this._hoveredItem = null;
             }
+        },
+
+        _getBemJson: function (data) {
+            return data.map(function (item) {
+                return { elem: 'item', js: { id: item.Id, val: item.City }, content: item.City };
+            });
         },
     }));
 

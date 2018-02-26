@@ -16,8 +16,7 @@ block('input-search')(
                 mix: { block: this.block, elem: 'input' },
                 mods: {
                     theme: ctx.mods.theme || false,
-                    size: ctx.mods.size || false,
-                    'has-clear': true
+                    size: ctx.mods.size || false
                 },
                 name: ctx.name || null,
                 placeholder: 'Введите имя'
@@ -38,13 +37,20 @@ block('input-search')(
                         mods: { size: 'm' },
                         content: [
                             {
-                                block: 'spin',
-                                mix: { block: 'option', elem: 'spin' },
-                                mods: {
-                                    theme: ctx.mods.theme || false,
-                                    size: ctx.mods.size || false,
-                                    visible: true
-                                }
+                                elem: 'item',
+                                elemMods: 'spin',
+                                content: [
+                                    {
+                                        block: 'spin',
+                                        mix: { block: 'option', elem: 'spin' },
+                                        mods: {
+                                            theme: ctx.mods.theme || false,
+                                            size: 's',
+                                            visible: true
+                                        }
+                                    },
+                                    'Загрузка'
+                                ]
                             }
                         ]
                     }

@@ -49,7 +49,7 @@ modules.define('input-search', ['i-bem-dom', 'dom', 'input', 'popup', 'option', 
                         }
                         this._inputVal = this._input.getVal();
                         this._currentData = this._searchInData(this._currentData, this._input.getVal());
-                        this._optionScroll(this._currentData);
+                        // this._optionScroll(this._currentData);
                         this._option.setData(this._currentData);
                     });
 
@@ -80,8 +80,8 @@ modules.define('input-search', ['i-bem-dom', 'dom', 'input', 'popup', 'option', 
             // });
 
             return this._getData(this.params.url).then(function (data) {
-                _this._option.setData(this._currentData);
-                return _this._optionScroll(data);
+                return _this._option.setData(data);
+                // return _this._optionScroll(data);
             });
         },
 
