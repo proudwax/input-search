@@ -1,4 +1,4 @@
-modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes', 'BEMHTML'], function (provide, bemDom, OptionItem, Spin, keyCodes, BEMHTML) {
+modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes', 'functions__throttle', 'BEMHTML'], function (provide, bemDom, OptionItem, Spin, keyCodes, throttle, BEMHTML) {
 
     provide(bemDom.declBlock(this.name, {
         onSetMod: {
@@ -26,36 +26,57 @@ modules.define('option', ['i-bem-dom', 'option__item', 'spin', 'keyboard__codes'
             }
         },
 
-        onScroll: function () {
-            this._domEvents().on('scroll', function (e) {
-                console.dir(this.domElem[0]);
-                console.log(this.domElem[0].scrollTop);
-            });
+        _isVisible: function (node) {
+            var coordsNode = node[0].getBoundingClientRect(),
+                coordsOption = this.domElem[0].getBoundingClientRect();
 
+            return coordsNode.top > 0 && coordsNode.top < coordsOption.top + coordsOption.height;
         },
 
-        updateItems: function (bemJson) {
+        onScroll: function () {
+            this._domEvents().on('scroll', throttle(
+                function (e) {
+                    console.dir(this.domElem[0]);
+                    console.log(this.domElem[0].scrollTop);
+                }, 300).bind(this));
+        },
+
+        updateContent: function (bemJson) {
             bemDom.update(this.domElem, BEMHTML.apply({ block: 'option', tag: '', content: bemJson }));
 
             return this;
         },
 
-        addItems: function (bemJson) {
+        addContent: function (bemJson) {
             bemDom.append(this.domElem, BEMHTML.apply({ block: 'option', tag: '', content: bemJson }));
         },
 
         addSpin: function () {
-            bemDom.append(this.domElem, BEMHTML.apply({ block: 'spin', mods: { theme: 'islands', size: 'm', visible: true } }));
+            this.addContent({ block: 'spin', mods: { theme: 'islands', size: 'm', visible: true } });
+
+            return this;
         },
 
         removeSpin: function () {
-            bemDom.destruct(this.findChildBlock(Spin).domElem);
+            this.findChildBlock(Spin) && bemDom.destruct(this.findChildBlock(Spin).domElem);
+
+            return this;
         },
 
         setInput: function (input) {
             this._input = input;
 
             return this;
+        },
+
+        setData: function (data) {
+            console.log(data);
+        },
+
+        _getBemJson: function (data) {
+            return data.map(function (item) {
+                return { elem: 'item', js: { id: item.Id, val: item.City }, content: item.City };
+            });
         },
 
         _onKeyDown: function (e) {

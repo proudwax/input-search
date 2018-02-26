@@ -50,6 +50,7 @@ modules.define('input-search', ['i-bem-dom', 'dom', 'input', 'popup', 'option', 
                         this._inputVal = this._input.getVal();
                         this._currentData = this._searchInData(this._currentData, this._input.getVal());
                         this._optionScroll(this._currentData);
+                        this._option.setData(this._currentData);
                     });
 
 
@@ -79,6 +80,7 @@ modules.define('input-search', ['i-bem-dom', 'dom', 'input', 'popup', 'option', 
             // });
 
             return this._getData(this.params.url).then(function (data) {
+                _this._option.setData(this._currentData);
                 return _this._optionScroll(data);
             });
         },
@@ -115,7 +117,7 @@ modules.define('input-search', ['i-bem-dom', 'dom', 'input', 'popup', 'option', 
         },
 
         _setBemJson: function (bemJson) {
-            this._option.updateItems(bemJson);
+            this._option.updateContent(bemJson);
             // this._option.onClick(this); // передаю весь инстанс блока в Option для добавления значений в Input
         },
 
@@ -132,7 +134,7 @@ modules.define('input-search', ['i-bem-dom', 'dom', 'input', 'popup', 'option', 
 
                         if (partData.length > 0) {
                             _this._option.removeSpin();
-                            _this._option.addItems(_this._getBemJson(partData));
+                            _this._option.addContent(_this._getBemJson(partData));
                             _this._option.addSpin();
                             startArr = startArr + 50;
                         } else {
